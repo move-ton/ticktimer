@@ -6,15 +6,15 @@ contract callbackContract {
 }
 
 contract ticktimer {
+    address owner;
+
     modifier onlyOwnerAndAccept {
         require(msg.pubkey() == tvm.pubkey());
         tvm.accept();
         _;
     }
-    constructor() public {
-        require(tvm.pubkey() != 0);
-        tvm.accept();
-    }
+    constructor() public onlyOwnerAndAccept {owner = msg.sender; }
+
 
     function setCode(TvmCell newcode) public view onlyOwnerAndAccept {
 		// Runtime function that creates an output action that would change this
@@ -37,23 +37,25 @@ contract ticktimer {
         return addressAnotherContract;
     }
 
-    function startCallback(uint payload,uint32 timeInt) public {
+    function startCallback(uint payload,uint64 timeInt) public {
+        require(msg.sender == owner);
+        tvm.accept();
         ticktimer sender;
         sender = ticktimer(addressAnotherContract);
-        sender._callback(payload,timeInt,msg.sender);
+        sender._callback(payload,timeInt);
     }
 
-    function _callback(uint payload,uint32 timeInt,address initiator) public {
-        if (msg.sender == addressAnotherContract) {
-            if (timeInt <= now) {
-                callbackContract handler;
-                handler = callbackContract(initiator);
-                handler._callbackTimer(payload);
-            } else {
-                ticktimer sender;
-                sender = ticktimer(addressAnotherContract);
-                sender._callback(payload,timeInt,initiator);
-            }
+    function _callback(uint payload,uint64 timeInt) public {
+        require(msg.sender == addressAnotherContract);
+        tvm.accept();
+        if (timeInt <= now) {
+            callbackContract handler;
+            handler = callbackContract(owner);
+            handler._callbackTimer(payload);
+        } else {
+            ticktimer sender;
+            sender = ticktimer(addressAnotherContract);
+            sender._callback(payload,timeInt);
         }
     }
     
@@ -61,3 +63,4 @@ contract ticktimer {
         return now;
     }
 }
+
