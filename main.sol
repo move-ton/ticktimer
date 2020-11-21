@@ -66,7 +66,7 @@ contract first {
         obj.timeInt = _time + now;
         binders.push(obj);
         if (isRunning == false) {
-            secondC(secondAddress).reverse{value: 0}();
+            secondC(secondAddress).reverse{value: 1 ton}();
         }
     }
 
@@ -104,7 +104,7 @@ contract first {
 
         isRunning = binders.length > 0; // Check needing to work
         if (isRunning) {
-            secondC(secondAddress).reverse{value: 0}(); // Run another contract to run OnBounce throug one block (about 5 seconds in 0 workchain and about 0.2 in -1)
+            secondC(secondAddress).reverse{value: 1 ton}(); // Run another contract to run OnBounce throug one block (about 5 seconds in 0 workchain and about 0.2 in -1)
         }
     }
 
