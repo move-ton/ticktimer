@@ -88,7 +88,7 @@ contract first {
         lastBlockTimestamp = now;
 
         // Check owner
-        if (msg.sender == secondAddress || msg.pubkey() == tvm.pubkey()) {
+        if (msg.sender == errorAddress || msg.pubkey() == tvm.pubkey()) { // legacy
             tvm.accept();
         }
 
