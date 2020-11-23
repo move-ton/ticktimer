@@ -10,7 +10,7 @@ contract client {
 }
 
 
-contract first {
+contract main {
     struct MetaData { // Struct with necessary data to do callback
         uint payload;
         uint64 timeInt;
@@ -39,11 +39,6 @@ contract first {
                 tvm.setCurrentCode(newcode);
         }
 
-    function changeAddress(address _adr) public onlyOwnerAndAccept { // This method exists for earlier it can be simple delete
-        // Test function
-        errorAddress = _adr;
-    }
-
     function createHandler(uint _payload,uint64 _time) public onlyOwnerAndAccept {
         // TODO check null sender
         //require(msg.sender != 0,100);
@@ -70,31 +65,13 @@ contract first {
         }
     }
 
-
-    function changeIsRunning(bool _bool) public onlyOwnerAndAccept {
-        // Test function
-        isRunning = _bool;
-    }
-
-    function info() public returns (bool _isRunning, MetaData[] _metadata,uint _binders_count,bool isrunning) { // Method to getting debug info. Can be deleted
-        // Get info about status
-        return (isRunning,binders,binders.length,binders.length > 0);
-    }
-
-
     function handler() public {
         // protection of gas leaking
         require(now > lastBlockTimestamp,101,"Double calling");
         lastBlockTimestamp = now;
-
-        // Check owner
-        if (msg.sender == errorAddress || msg.pubkey() == tvm.pubkey()) { // legacy
-            tvm.accept();
-        }
-
+        
         // For loop to check all handlers
         for (uint i = 0; i < binders.length; i++) {
-
             if (binders[i].timeInt <= lastBlockTimestamp) {
                 MetaData obj = binders[i]; // Save obj
                 delMeta(i); // Delete element from handlers
@@ -114,4 +91,3 @@ contract first {
         // TODO Do check of function id
     }
 }
-
