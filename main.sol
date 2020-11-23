@@ -1,7 +1,7 @@
 pragma solidity >= 0.6.0;
 
-contract secondC {
-    function reverse() public {}
+contract raiseError {
+    function error() public {}
 }
 
 
@@ -16,7 +16,7 @@ contract first {
         uint64 timeInt;
         address addr;
     }
-    address secondAddress; // Address there is contract will be send message and raise error
+    address errorAddress; // Address there is contract will be send message and raise error. It can be 0 or can be another contract 
     bool isRunning = false;
     uint lastBlockTimestamp = 0;
     MetaData[] binders; // Main array how contain data to callback
@@ -39,9 +39,9 @@ contract first {
                 tvm.setCurrentCode(newcode);
         }
 
-    function change_address(address _adr) public onlyOwnerAndAccept {
+    function changeAddress(address _adr) public onlyOwnerAndAccept { // This method exists for earlier it can be simple delete
         // Test function
-        secondAddress = _adr;
+        errorAddress = _adr;
     }
 
     function createHandler(uint _payload,uint64 _time) public onlyOwnerAndAccept {
@@ -53,7 +53,7 @@ contract first {
         obj.timeInt = _time;
         binders.push(obj);
         if (isRunning == false) {
-            secondC(secondAddress).reverse{value: 1 ton}();
+            raiseError(errorAddress).error{value: 1 ton}();
         }
     }
 
@@ -66,7 +66,7 @@ contract first {
         obj.timeInt = _time + now;
         binders.push(obj);
         if (isRunning == false) {
-            secondC(secondAddress).reverse{value: 1 ton}();
+            raiseError(errorAddress).error{value: 1 ton}();
         }
     }
 
@@ -76,7 +76,7 @@ contract first {
         isRunning = _bool;
     }
 
-    function info() public returns (bool _isRunning, MetaData[] _metadata,uint _binders_count,bool isrunning) {
+    function info() public returns (bool _isRunning, MetaData[] _metadata,uint _binders_count,bool isrunning) { // Method to getting debug info. Can be deleted
         // Get info about status
         return (isRunning,binders,binders.length,binders.length > 0);
     }
@@ -104,7 +104,7 @@ contract first {
 
         isRunning = binders.length > 0; // Check needing to work
         if (isRunning) {
-            secondC(secondAddress).reverse{value: 1 ton}(); // Run another contract to run OnBounce throug one block (about 5 seconds in 0 workchain and about 0.2 in -1)
+            raiseError(errorAddress).error{value: 1 ton}();// Run another contract to run OnBounce throug one block (about 5 seconds in 0 workchain and about 0.2 in -1)
         }
     }
 
