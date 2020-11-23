@@ -29,15 +29,15 @@ contract first {
     }
 
     modifier onlyOwnerAndAccept {
-		require(msg.pubkey() == tvm.pubkey()); // Check owner
-		tvm.accept();
-		_;
-	}
+                require(msg.pubkey() == tvm.pubkey()); // Check owner
+                tvm.accept();
+                _;
+        }
 
     function setCode(TvmCell newcode) public view onlyOwnerAndAccept {
-		tvm.setcode(newcode);
-		tvm.setCurrentCode(newcode);
-	}
+                tvm.setcode(newcode);
+                tvm.setCurrentCode(newcode);
+        }
 
     function change_address(address _adr) public onlyOwnerAndAccept {
         // Test function
@@ -114,3 +114,4 @@ contract first {
         // TODO Do check of function id
     }
 }
+
