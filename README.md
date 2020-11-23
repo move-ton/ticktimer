@@ -1,6 +1,6 @@
 This repository for freeton [contest](https://devex.gov.freeton.org/proposal?proposalAddress=0:91ea1dcdfbaa2d9f869e07a04516addd8752eecd307157e8d4012e1a934094be) for running this contract you need: [solc](https://github.com/tonlabs/TON-Solidity-Compiler), [tvm_linker](https://github.com/tonlabs/TVM-linker), [tonos-cli](https://github.com/tonlabs/tonos-cli)
 
-##Deploy
+## Deploy
 
 - Compile contract:
 ```solc main.sol```
@@ -22,7 +22,7 @@ This repository for freeton [contest](https://devex.gov.freeton.org/proposal?pro
 
 Yes, createTimer create handler nowtime + your time. Its useful for users. And createHandler set only your time.
 
-##How connect this library to my contract?
+## How connect this library to my contract?
 
 Its simple. You can watch the test.sol
 
@@ -42,10 +42,9 @@ address timerAddress;
 ##### and set this address through the function for example changeAddress
 
 ```solidity
-  function changeAddress(address _adr) public onlyOwnerAndAccept {
-
-        timerAddress = _adr;
-    }
+function changeAddress(address _adr) public onlyOwnerAndAccept {
+    timerAddress = _adr;
+}
 ```
 
 ##### Then you need to create handler there will be sending from timer
