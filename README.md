@@ -18,7 +18,7 @@ This repository for freeton [contest](https://devex.gov.freeton.org/proposal?pro
 
 ```tonos-cli call <address> createHandler '{"_payload":"<payload in int64>","_time":<time in seconds>}' --abi main.abi.json --sign timer.keys.json```
 
-##Are there any differences between createTimer and createHandler?
+## Are there any differences between createTimer and createHandler?
 
 Yes, createTimer create handler nowtime + your time. Its useful for users. And createHandler set only your time.
 
