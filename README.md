@@ -4,7 +4,8 @@ This repository for freeton [contest](https://devex.gov.freeton.org/proposal?pro
 
 ##### Compile contract:
 ```bash
-solc main.sol```
+solc main.sol
+```
 
 ##### Compile in tvc:
 ```tvm_linker compile --lib stdlib_sol.tvm --abi-json main.abi.json main.code```
