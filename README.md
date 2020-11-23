@@ -8,19 +8,27 @@ solc main.sol
 ```
 
 ##### Compile in tvc:
-```tvm_linker compile --lib stdlib_sol.tvm --abi-json main.abi.json main.code```
+```bash
+tvm_linker compile --lib stdlib_sol.tvm --abi-json main.abi.json main.code
+```
 
 ##### Generate address
-```tonos-cli genaddr <main>.tvc main.abi.json --genkey timer.keys.json```
+```bash
+tonos-cli genaddr <main>.tvc main.abi.json --genkey timer.keys.json
+```
 
 ##### Send some crystal there or use giver
 
 ##### Use it! 
-```tonos-cli call <address> createTimer '{"_payload":"<payload in int64>","_time":<time in seconds>}' --abi main.abi.json --sign timer.keys.json``` 
+```bash
+tonos-cli call <address> createTimer '{"_payload":"<payload in int64>","_time":<time in seconds>}' --abi main.abi.json --sign timer.keys.json
+``` 
 
 or 
 
-```tonos-cli call <address> createHandler '{"_payload":"<payload in int64>","_time":<time in seconds>}' --abi main.abi.json --sign timer.keys.json```
+```bash 
+tonos-cli call <address> createHandler '{"_payload":"<payload in int64>","_time":<time in seconds>}' --abi main.abi.json --sign timer.keys.json
+```
 
 ## Are there any differences between createTimer and createHandler?
 
