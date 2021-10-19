@@ -3,6 +3,7 @@ pragma solidity >= 0.6.0;
 import "main.sol";
 
 contract second {
+    uint[] public results;
     modifier onlyOwnerAndAccept {
                 require(msg.pubkey() == tvm.pubkey());
                 tvm.accept();
@@ -23,10 +24,20 @@ contract second {
                 tvm.setCurrentCode(newcode);
         }
 
+    function _timer_handler(uint payload) public  {
+        require(msg.sender == adrFirst, 101);
+        tvm.accept();
+        results.push(payload);
+    }
+
+    function createTimer(uint _payload,uint64 _time) public onlyOwnerAndAccept {
+        main(adrFirst).createTimer(_payload,_time);
+    }
+
     function reverse() public onlyOwnerAndAccept {
         revert(101);
     }
-        function reverse_send(address _adr) public onlyOwnerAndAccept {
-        first(_adr).handler();
-    }
+    // function reverse_send(address _adr) public onlyOwnerAndAccept {
+    //     first(_adr).handler();
+    // }
 }

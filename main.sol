@@ -1,14 +1,6 @@
 pragma solidity >= 0.6.0;
 
-contract raiseError {
-    function error() public {}
-}
-
-
-contract client {
-    function _timer_handler(uint payload) public {}
-}
-
+import "interface.sol";
 
 contract main {
     struct MetaData { // Struct with necessary data to do callback
@@ -39,9 +31,9 @@ contract main {
                 tvm.setCurrentCode(newcode);
         }
 
-    function createHandler(uint _payload,uint64 _time) public onlyOwnerAndAccept {
-        // TODO check null sender
-        //require(msg.sender != 0,100);
+    function createHandler(uint _payload,uint64 _time) public {
+        require(msg.sender != address(0),100);
+        tvm.accept();
         MetaData obj;
         obj.addr = msg.sender;
         obj.payload = _payload;
@@ -52,9 +44,9 @@ contract main {
         }
     }
 
-    function createTimer(uint _payload,uint64 _time) public onlyOwnerAndAccept {
-        // TODO check null sender
-        //require(msg.sender != 0,100);
+    function createTimer(uint _payload,uint64 _time) public {
+        require(msg.sender != address(0),100);
+        tvm.accept();
         MetaData obj;
         obj.addr = msg.sender;
         obj.payload = _payload;
@@ -75,7 +67,7 @@ contract main {
             if (binders[i].timeInt <= lastBlockTimestamp) {
                 MetaData obj = binders[i]; // Save obj
                 delMeta(i); // Delete element from handlers
-                client(obj.addr)._timer_handler{value: 0,bounce: false}(obj.payload); // Send without bounce to protect gas leaking
+                client(obj.addr)._timer_handler{value: 0}(obj.payload);
             }
         }
 
@@ -88,6 +80,5 @@ contract main {
 
     onBounce(TvmSlice slice) external {
         handler(); // Handler to chceck timer
-        // TODO Do check of function id
     }
 }

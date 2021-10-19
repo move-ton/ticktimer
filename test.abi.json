@@ -1,0 +1,73 @@
+{
+	"ABI version": 2,
+	"version": "2.1",
+	"header": ["time"],
+	"functions": [
+		{
+			"name": "change_address",
+			"inputs": [
+				{"name":"_adr","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCode",
+			"inputs": [
+				{"name":"newcode","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "_timer_handler",
+			"inputs": [
+				{"name":"payload","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "createTimer",
+			"inputs": [
+				{"name":"_payload","type":"uint256"},
+				{"name":"_time","type":"uint64"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "reverse",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "constructor",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "results",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"results","type":"uint256[]"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"results","type":"uint256[]"},
+		{"name":"adrFirst","type":"address"}
+	]
+}
